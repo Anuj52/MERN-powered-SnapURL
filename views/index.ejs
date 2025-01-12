@@ -1,93 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <title>SnapURL - URL Shortener</title>
-  <style>
-    body {
-      background-color: #f8f9fa;
-      font-family: 'Arial', sans-serif;
-    }
-    .container {
-      max-width: 900px;
-      margin-top: 50px;
-      padding: 30px;
-      background-color: #fff;
-      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-    }
-    .table th, .table td {
-      text-align: center;
-    }
-    .table {
-      margin-top: 30px;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #007bff;
-    }
-    .form-inline {
-      justify-content: center;
-    }
-    .form-control {
-      border-radius: 5px;
-    }
-    .btn-success {
-      border-radius: 5px;
-    }
-    .btn {
-      padding: 10px 20px;
-    }
-    .btn:hover {
-      background-color: #28a745;
-    }
-    .table-striped tbody tr:nth-of-type(odd) {
-      background-color: #f1f1f1;
-    }
-    a {
-      color: #007bff;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>SnapURL - URL Shortener</h1>
-    <form action="/shortUrls" method="POST" class="my-4 form-inline">
-      <label for="fullUrl" class="sr-only">Full URL</label>
-      <input required placeholder="Enter URL" type="url" name="fullUrl" id="fullUrl" class="form-control col-md-8 mr-2">
-      <button class="btn btn-success" type="submit">Shrink</button>
-    </form>
-    
-    <table class="table table-striped table-responsive">
-      <thead>
-        <tr>
-          <th>Full URL</th>
-          <th>Short URL</th>
-          <th>Clicks</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% shortUrls.forEach(shortUrl => { %>
-          <tr>
-            <td><a href="<%= shortUrl.full %>" target="_blank"><%= shortUrl.full %></a></td>
-            <td><a href="<%= shortUrl.short %>" target="_blank"><%= shortUrl.short %></a></td>
-            <td><%= shortUrl.clicks %></td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SNAPURL</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+      }
+      .container {
+        margin-top: 2rem;
+      }
+      .alert-warning {
+        font-size: 1rem;
+        padding: 1rem;
+      }
+      .table {
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #ffffff;
+      }
+      .table img {
+        width: 50px;
+        height: 50px;
+      }
+      .delete-btn {
+        display: none;
+      }
+      .url-row:hover .delete-btn {
+        display: inline-block;
+      }
+      .form-group label {
+        font-weight: bold;
+      }
+      .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+      .btn-primary:hover {
+        background-color: #0056b3;
+      }
+      .header {
+        background-color: #343a40;
+        color: #ffffff;
+        padding: 1rem;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .header h1 {
+        margin: 0;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding: 1rem;
+        background-color: #343a40;
+        color: white;
+        border-radius: 8px;
+      }
+      .form-control {
+        border-radius: 0.5rem;
+      }
+      .btn-sm {
+        border-radius: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>SNAPURL</h1>
+        <div>
+          <% if (user) { %>
+          <span>Welcome, <%= user.username %>!</span>
+          <form action="/logout" method="GET" style="display: inline">
+            <button type="submit" class="btn btn-danger btn-sm ml-2">
+              Logout
+            </button>
+          </form>
+          <% } %>
+        </div>
+      </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zyVB0x9+1xqKzQ4fVVJ8wEdJ5YFdxgD/DdT5pJYj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-J6qa4849blE1XJ6HpW6e5R9g6LZCd5Q1a0vI5b3Vd3J7sYhsr6Kv8v8Jn6NBm0R9" crossorigin="anonymous"></script>
-</body>
+      <!-- Notification for Expiring URLs -->
+      <% if (typeof expiringUrls !== 'undefined' && expiringUrls.length > 0) {
+      %>
+      <div class="alert alert-warning mt-4">
+        <strong>Warning!</strong> You have URLs that will expire in less than 3
+        days:
+        <ul>
+          <% expiringUrls.forEach(url => { %>
+          <li>
+            <a href="/<%= url.short %>" target="_blank"><%= url.short %></a> -
+            Expires on <%= url.expirationDate.toDateString() %>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+      <% } %>
+
+      <!-- Short URL Form -->
+      <form action="/shortUrls" method="POST" class="my-4 p-3 bg-light rounded">
+        <h4>Shorten a New URL</h4>
+        <div class="form-group">
+          <label for="fullUrl">Full URL</label>
+          <input
+            type="text"
+            id="fullUrl"
+            name="fullUrl"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="customSlug">Custom Slug (optional)</label>
+          <input
+            type="text"
+            id="customSlug"
+            name="customSlug"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="expirationDays"
+            >Expiration Days (optional, default is 10 days)</label
+          >
+          <input
+            type="number"
+            id="expirationDays"
+            name="expirationDays"
+            class="form-control"
+            min="1"
+          />
+        </div>
+        <div class="form-group">
+          <label for="theme">Select Theme</label>
+          <select id="theme" name="theme" class="form-control">
+            <option value="default">Default</option>
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Shorten</button>
+      </form>
+
+      <!-- Bulk URL Shortening -->
+      <form
+        action="/bulkShorten"
+        method="POST"
+        enctype="multipart/form-data"
+        class="my-4 p-3 bg-light rounded"
+      >
+        <h4>Bulk URL Shortening</h4>
+        <div class="form-group">
+          <label for="csvFile">Upload CSV File</label>
+          <input
+            type="file"
+            id="csvFile"
+            name="csvFile"
+            class="form-control"
+            accept=".csv"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Bulk Shorten</button>
+      </form>
+
+      <!-- Search Form -->
+      <form action="/search" method="GET" class="my-4 p-3 bg-light rounded">
+        <h4>Search URLs</h4>
+        <div class="form-group">
+          <label for="searchTerm">Search URLs</label>
+          <input
+            type="text"
+            id="searchTerm"
+            name="searchTerm"
+            class="form-control"
+            placeholder="Enter search term"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+
+      <!-- Display Shortened URLs -->
+      <table class="table table-striped mt-4">
+        <thead class="thead-dark">
+          <tr>
+            <th>Full URL</th>
+            <th>Short URL</th>
+            <th>Clicks</th>
+            <th>Expiration Date</th>
+            <th>QR Code</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (shortUrls.length > 0) { %> <% shortUrls.forEach(shortUrl => {
+          %>
+          <tr class="url-row">
+            <td>
+              <a href="<%= shortUrl.full %>" target="_blank"
+                ><%= shortUrl.full %></a
+              >
+            </td>
+            <td>
+              <a href="/<%= shortUrl.short %>" target="_blank"
+                ><%= shortUrl.short %></a
+              >
+            </td>
+            <td><%= shortUrl.clicks %></td>
+            <td>
+              <%= shortUrl.expirationDate ?
+              shortUrl.expirationDate.toDateString() : 'N/A' %>
+            </td>
+            <td><img src="<%= shortUrl.qrCode %>" alt="QR Code" /></td>
+            <td>
+              <form
+                action="/shortUrls/<%= shortUrl.short %>/delete"
+                method="POST"
+                style="display: inline"
+              >
+                <button type="submit" class="btn btn-danger btn-sm delete-btn">
+                  Delete
+                </button>
+              </form>
+            </td>
+          </tr>
+          <% }) %> <% } else { %>
+          <tr>
+            <td colspan="6" class="text-center">No results found</td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+    <%- include('partials/footer') %>
+    <footer class="text-center my-4">
+      <p>
+        Created by
+        <a href="https://github.com/Anuj52" target="_blank">Anuj52</a>
+      </p>
+    </footer>
+  </body>
 </html>

@@ -1,0 +1,68 @@
+<!-- filepath: /c:/MERN-powered-SnapURL/views/partials/header.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNAPURL</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .header {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .welcome-text {
+            margin-right: 1rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .logout-btn, .signup-btn, .login-btn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .logout-btn:hover, .signup-btn:hover, .login-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="header d-flex justify-content-between align-items-center">
+            <h1>SNAPURL</h1>
+            <div class="user-info">
+                <% if (user) { %>
+                    <span class="welcome-text">Welcome, <%= user.username %>!</span>
+                    <form action="/logout" method="GET" style="display:inline;">
+                        <button type="submit" class="logout-btn">Logout</button>
+                    </form>
+                <% } else { %>
+                    <% if (currentPage === 'signup') { %>
+                        <a href="/login" class="login-btn">Login</a>
+                    <% } else if (currentPage === 'login') { %>
+                        <a href="/signup" class="signup-btn">Sign Up</a>
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

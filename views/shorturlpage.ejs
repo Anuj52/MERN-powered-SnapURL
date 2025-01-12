@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortened URL</title>
+    <% if (shortUrl.theme === 'dark') { %>
+        <link rel="stylesheet" href="/styles/dark.css">
+    <% } else if (shortUrl.theme === 'light') { %>
+        <link rel="stylesheet" href="/styles/light.css">
+    <% } else { %>
+        <link rel="stylesheet" href="/styles/default.css">
+    <% } %>
+</head>
+<body>
+    <%- include('partials/header', { user: user }) %>
+
+    <div class="container mt-5">
+        <h1>Shortened URL</h1>
+        <p>Full URL: <a href="<%= shortUrl.full %>" target="_blank"><%= shortUrl.full %></a></p>
+        <p>Short URL: <a href="/<%= shortUrl.short %>" target="_blank"><%= shortUrl.short %></a></p>
+        <p>Clicks: <%= shortUrl.clicks %></p>
+        <p>Expiration Date: <%= shortUrl.expirationDate ? shortUrl.expirationDate.toDateString() : 'N/A' %></p>
+        <p>QR Code: <img src="<%= shortUrl.qrCode %>" alt="QR Code"></p>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>
