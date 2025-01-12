@@ -1,0 +1,24 @@
+{
+  "name": "mern-powered-snapurl",
+  "version": "1.0.0",
+  "description": "MERN-powered SnapURL is a fast, efficient, and reliable URL shortener built with the powerful MERN stack (MongoDB, Express.js, React, and Node.js). Designed to help users easily shorten long URLs, SnapURL provides a simple interface where you can quickly shorten, track, and share links with ease.",
+  "keywords": [
+    "UrlShrotner"
+  ],
+  "license": "ISC",
+  "author": "Anuj52",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon server.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.4",
+    "shortid": "^2.2.16"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
